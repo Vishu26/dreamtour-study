@@ -69,11 +69,11 @@
  },
  {
   "q": 5,
-  "scene": "f05",
+  "scene": "f02",
   "motion": "arc_right",
   "sentence": "The camera orbits steadily to the right around the scene.",
   "short": "orbit right \u00b7 25\u00b0",
-  "scene_prompt": "a bamboo forest path with a stone walkway and a low fence, dappled light",
+  "scene_prompt": "the interior of a gothic cathedral nave, stone pillars, stained-glass windows, wooden pews, soft light",
   "videos": {
    "wan_text": "videos/q05_wan_text.mp4",
    "wan_ls": "videos/q05_wan_ls.mp4",

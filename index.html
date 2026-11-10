@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Camera-Movement Study</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@600&display=swap" rel="stylesheet">
+<style>
+  :root { --bg: #0b0e14; --card: #131825; --card2: #1a2133; --ink: #e8ecf4; --muted: #8b93a7; --accent: #5b8cff; --accent2: #8f6bff; --good: #38d39f; --line: #232b3f; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: Inter, system-ui, sans-serif; background: radial-gradient(1200px 500px at 70% -10%, #15204033, transparent), var(--bg); color: var(--ink); }
+  header { padding: 26px 34px 18px; position: sticky; top: 0; z-index: 5; background: linear-gradient(#0b0e14f2, #0b0e14e6); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+  header h1 { margin: 0 0 6px; font-size: 21px; font-weight: 800; letter-spacing: -.01em;
+    background: linear-gradient(90deg, var(--accent), var(--accent2)); -webkit-background-clip: text; background-clip: text; color: transparent; display: inline-block; }
+  header p { margin: 0; color: var(--muted); font-size: 13.5px; max-width: 1150px; line-height: 1.5; }
+  header b { color: var(--ink); }
+  #bar { height: 4px; background: var(--line); border-radius: 2px; margin-top: 14px; overflow: hidden; }
+  #fill { height: 100%; width: 0; background: linear-gradient(90deg, var(--accent), var(--accent2)); transition: width .4s; }
+  #progress { font-weight: 600; color: var(--accent); }
+  .question { max-width: 1680px; margin: 22px auto; background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 18px 20px; box-shadow: 0 18px 50px #00000055; }
+  .prompt { display: flex; gap: 18px; align-items: center; background: linear-gradient(135deg, #16305e55, #2b1d5e44); border: 1px solid #31406b; border-radius: 14px; padding: 16px 20px; }
+  .prompt .icon { font-size: 32px; color: var(--accent); line-height: 1; }
+  .prompt .label { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); font-weight: 800; }
+  .prompt .text { font-size: 18px; font-weight: 800; margin-top: 3px; }
+  .prompt .exact { font-size: 14px; margin-top: 4px; color: var(--muted); }
+  .prompt .exact b { color: var(--good); font-family: 'JetBrains Mono', monospace; }
+  .scene { color: var(--muted); font-size: 12.5px; margin: 10px 2px 16px; }
+  .grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; }
+  .cell { border: 2px solid var(--line); border-radius: 14px; overflow: hidden; background: #000; cursor: grab; transition: transform .15s, border-color .15s, box-shadow .15s; }
+  .cell:hover { border-color: #3b4a73; }
+  .cell.dragging { opacity: .4; }
+  .cell.over { border-color: var(--accent); box-shadow: 0 0 0 4px #5b8cff2e; transform: scale(1.012); }
+  .cell video { width: 100%; display: block; aspect-ratio: 16/9; object-fit: cover; pointer-events: none; }
+  .cell .bar2 { display: flex; align-items: center; justify-content: space-between; padding: 5px 8px; background: var(--card2); }
+  .rank-badge { font-family: 'JetBrains Mono', monospace; font-weight: 600; font-size: 11.5px; border-radius: 20px; padding: 2px 9px; background: linear-gradient(90deg, var(--accent), var(--accent2)); color: #fff; }
+  .cell[data-i="0"] .rank-badge { background: var(--good); color: #05261b; }
+  .tag { font-size: 12px; color: var(--muted); font-weight: 600; }
+  .grab { color: #3b4360; font-size: 18px; letter-spacing: 2px; }
+  .lockrow { display: flex; align-items: center; gap: 12px; margin-top: 12px; }
+  .lockbtn { background: var(--card2); color: var(--ink); border: 1px solid var(--line); box-shadow: none; padding: 8px 18px; font-size: 13.5px; }
+  .lockbtn.locked { background: #123524; border-color: #1f6a43; color: var(--good); }
+  button:disabled { filter: grayscale(.6); opacity: .6; cursor: default; }
+  .nav { display: flex; justify-content: space-between; align-items: center; margin-top: 18px; }
+  .hint { color: var(--muted); font-size: 13px; }
+  button { background: linear-gradient(90deg, var(--accent), var(--accent2)); color: #fff; border: 0; border-radius: 10px; padding: 11px 28px; font-size: 15px; font-weight: 700; cursor: pointer; box-shadow: 0 8px 24px #5b8cff44; }
+  button:hover { filter: brightness(1.1); }
+  #done { max-width: 720px; margin: 80px auto; text-align: center; display: none; background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 44px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>How well does the camera follow the request?</h1>
+  <p><b>Drag the videos into order</b> — best adherence first (#1, leftmost), worst last (#6). Judge only the camera: the right direction <b>and the exact requested distance</b>. Moving too far is an error, just like moving too little or drifting. Ignore image style. &nbsp;<span id="progress"></span></p>
+  <div id="bar"><div id="fill"></div></div>
+</header>
+<div style="max-width:980px;margin:18px auto 0;padding:14px 20px;border:1px solid #e3b341;background:#e3b34118;border-radius:12px;font-size:15px;line-height:1.5">
+  <b>What to judge:</b> rank the clips by how <b>precisely the camera performs the requested movement</b> — the right direction and the right amount.
+  <b>Video quality does not matter</b>: ignore sharpness, artifacts, or how pretty the scene looks.
+  A camera that moves <b>too little (undershoot)</b> or <b>too far (overshoot)</b> are both wrong — closest to the exact request wins.
+</div>
+<main id="main"></main>
+<div id="done">
+  <h2>Thank you! 🎉</h2>
+  <p style="color:var(--muted)">Submitting your answers…</p>
+  <button onclick="dl()">Download my answers</button>
+</div>
+<script src="config.js"></script>
+<script>
+const ICONS = { truck_right: "→", truck_left: "←", rise: "↑", pedestal_down: "↓", bev: "◎↑", zoom_in: "⊕", zoom_out: "⊖", pan_left: "↶", pan_right: "↷", tilt_up: "⤴", tilt_down: "⤵", arc_left: "⟳", arc_right: "⟲" };
+let CFG = [], order = {}, dragEl = null, dragQ = null;
+const locked = {}, moves = {}, seenAt = {}, lockAt = {};
+const sid = Math.random().toString(36).slice(2, 10);
+fetch("study_config.json").then(r => r.json()).then(cfg => { CFG = cfg; CFG.forEach(q => {
+  order[q.q] = Object.keys(q.videos).map(k => [Math.random(), k]).sort((a, b) => a[0] - b[0]).map(x => x[1]);
+}); render(); });
+function render() {
+  const m = document.getElementById("main"); m.innerHTML = "";
+  CFG.forEach(q => {
+    const d = document.createElement("div"); d.className = "question"; d.id = `q${q.q}`;
+    d.innerHTML = `
+      <div class="prompt">
+        <div class="icon">${ICONS[q.motion] || ""}</div>
+        <div>
+          <div class="label">Question ${q.q} of ${CFG.length} — requested camera movement</div>
+          <div class="text">${q.sentence}</div>
+          <div class="exact">Exact request: <b>${q.exact}</b> over the whole clip — undershooting and overshooting both count against.</div>
+        </div>
+      </div>
+      <div class="scene">Scene: ${q.scene_prompt.slice(0, 110)}&hellip;</div>
+      <div class="grid" data-q="${q.q}"></div>
+      <div class="lockrow"><button class="lockbtn" id="lock${q.q}" onclick="lockQ(${q.q})">Lock in ranking</button><span class="hint" id="lockhint${q.q}"></span></div>`;
+    m.appendChild(d); drawGrid(q);
+  });
+  const f = document.createElement("div"); f.style.cssText = "text-align:center;margin:36px 0 70px";
+  f.innerHTML = `<div style="margin-bottom:14px"><input id="rater" type="text" placeholder="Your name (required)" oninput="setLockBtn(CFG[0].q)"
+      style="background:var(--card2);border:1px solid var(--line);color:var(--ink);border-radius:10px;padding:11px 16px;font-size:15px;width:300px;text-align:center"></div>
+    <button id="finish" disabled onclick="dl()">Lock all rankings to finish (0/${CFG.length})</button>
+    <div class="hint" style="margin-top:10px">Check every question above: left = best (#1), right = worst (#6).</div>`;
+  m.appendChild(f);
+  observe();
+}
+function drawGrid(q) {
+  const g = document.querySelector(`.grid[data-q="${q.q}"]`); g.innerHTML = "";
+  order[q.q].forEach((k, i) => {
+    const c = document.createElement("div"); c.className = "cell"; c.draggable = true;
+    c.innerHTML = `<video data-src="${(window.STUDY_CONFIG?.VIDEO_BASE || '')}${q.videos[k].replace(/^videos\//, window.STUDY_CONFIG?.VIDEO_BASE ? '' : 'videos/')}" muted loop playsinline preload="none"></video>
+      <div class="bar2"><span class="rank-badge">#${i + 1}${i === 0 ? " best" : i === 5 ? " worst" : ""}</span><span class="grab">⋮⋮</span></div>`;
+    c.addEventListener("dragstart", () => { dragEl = i; dragQ = q.q; c.classList.add("dragging"); });
+    c.addEventListener("dragend", () => { dragEl = null; dragQ = null; drawGrid(q); observe(); });
+    c.addEventListener("dragover", e => { e.preventDefault(); c.classList.add("over"); });
+    c.addEventListener("dragleave", () => c.classList.remove("over"));
+    c.addEventListener("drop", e => { e.preventDefault(); if (dragQ !== q.q || dragEl === null || dragEl === i) return;
+      const o = order[q.q], [mv] = o.splice(dragEl, 1); o.splice(i, 0, mv); moves[q.q] = (moves[q.q] || 0) + 1; if (locked[q.q]) { locked[q.q] = false; setLockBtn(q.q); } dragEl = null; dragQ = null; drawGrid(q); observe(); });
+    g.appendChild(c);
+  });
+}
+const io = new IntersectionObserver(es => es.forEach(e => {
+  const v = e.target;
+  if (e.isIntersecting) { if (!v.src) v.src = v.dataset.src; v.play().catch(() => {}); const qd = v.closest(".question"); if (qd) { const qq = Number(qd.id.slice(1)); if (!seenAt[qq]) seenAt[qq] = Date.now(); } }
+  else v.pause();
+}), { rootMargin: "300px" });
+function observe() { document.querySelectorAll("video[data-src]").forEach(v => io.observe(v)); }
+window.addEventListener("scroll", () => {
+  const h = document.body.scrollHeight - innerHeight;
+  document.getElementById("fill").style.width = `${100 * Math.min(1, scrollY / Math.max(1, h))}%`;
+  const qs = [...document.querySelectorAll(".question")];
+  const vis = qs.filter(q => q.getBoundingClientRect().top < innerHeight / 2).length;
+  document.getElementById("progress").textContent = `Question ${Math.max(1, Math.min(vis, qs.length))} / ${qs.length}`;
+});
+function setLockBtn(qq) {
+  const b = document.getElementById(`lock${qq}`);
+  b.classList.toggle("locked", !!locked[qq]);
+  b.textContent = locked[qq] ? "✓ Locked" : "Lock in ranking";
+  document.getElementById(`lockhint${qq}`).textContent = locked[qq] ? "" : "Arrange, then lock.";
+  const n = CFG.filter(q => locked[q.q]).length, btn = document.getElementById("finish");
+  const nameEl = document.getElementById("rater"), named = nameEl && nameEl.value.trim().length >= 2;
+  if (btn) { btn.disabled = n !== CFG.length || !named;
+    btn.textContent = n !== CFG.length ? `Lock all rankings to finish (${n}/${CFG.length})` : named ? "Finish ✓  Download my answers" : "Enter your name to finish"; }
+}
+function lockQ(qq) { locked[qq] = true; lockAt[qq] = Date.now(); setLockBtn(qq); }
+function dl() {
+  const open = CFG.find(q => !locked[q.q]);
+  if (open) { document.getElementById(`q${open.q}`).scrollIntoView({ behavior: "smooth" }); return; }
+  const name = (document.getElementById("rater")?.value || "").trim();
+  if (name.length < 2) { document.getElementById("rater").focus(); return; }
+  const out = { session: sid, rater: name, finished: new Date().toISOString(), answers: CFG.map(q => ({ q: q.q, scene: q.scene, motion: q.motion, exact: q.exact, repeat_of: q.repeat_of || null,
+    drags: moves[q.q] || 0, dwell_s: seenAt[q.q] && lockAt[q.q] ? Math.round((lockAt[q.q] - seenAt[q.q]) / 1000) : null,
+    ranking: Object.fromEntries(order[q.q].map((k, i) => [k, i + 1])) })) };
+  submit(out);
+}
+async function submit(out) {
+  const btn = document.getElementById("finish");
+  if (btn) { btn.disabled = true; btn.textContent = "Submitting…"; }
+  const cfg = window.STUDY_CONFIG || {};
+  try {
+    const r = await fetch(`${cfg.SUPABASE_URL}/rest/v1/study_responses`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", apikey: cfg.SUPABASE_ANON_KEY,
+                 Authorization: `Bearer ${cfg.SUPABASE_ANON_KEY}`, Prefer: "return=minimal" },
+      body: JSON.stringify({ session: out.session, rater: out.rater, payload: out }),
+    });
+    if (!r.ok) throw new Error(`supabase ${r.status}`);
+    document.querySelector("#done p").textContent = "Your answers were submitted. You can close this page.";
+    document.querySelector("#done button").style.display = "none";
+  } catch (err) {
+    console.error(err);
+    document.querySelector("#done p").textContent = "Automatic submission failed - please download your answers and send the file to the study organiser.";
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([JSON.stringify(out, null, 1)], { type: "application/json" }));
+    a.download = `camera_study_${out.rater.replace(/[^a-z0-9]+/gi, "_").toLowerCase()}_${out.session}.json`; a.click();
+  }
+  document.getElementById("done").style.display = "block"; window.scrollTo(0, document.body.scrollHeight);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,174 @@
+[
+ {
+  "q": 1,
+  "scene": "f18",
+  "motion": "rise",
+  "sentence": "The camera rises steadily straight up, a crane shot.",
+  "short": "rise \u00b7 1.6 m",
+  "scene_prompt": "a narrow cobbled street in an old European town, pastel facades on both sides, shuttered windows, a bakery sign, morning light",
+  "videos": {
+   "wan_text": "videos/q01_wan_text.mp4",
+   "wan_ls": "videos/q01_wan_ls.mp4",
+   "sanawm_cam": "videos/q01_sanawm_cam.mp4",
+   "sanawm_ls": "videos/q01_sanawm_ls.mp4",
+   "lyra_cam": "videos/q01_lyra_cam.mp4",
+   "lyra_ls": "videos/q01_lyra_ls.mp4"
+  },
+  "exact": "exactly a 1.6 m rise straight up"
+ },
+ {
+  "q": 2,
+  "scene": "f00",
+  "motion": "bev",
+  "sentence": "The camera rises steeply into a bird's-eye view while keeping the scene centred.",
+  "short": "bird's-eye \u00b7 2 m",
+  "scene_prompt": "a narrow cobbled street in an old European town, pastel facades on both sides, shuttered windows, a bakery sign, morning light",
+  "videos": {
+   "wan_text": "videos/q02_wan_text.mp4",
+   "wan_ls": "videos/q02_wan_ls.mp4",
+   "sanawm_cam": "videos/q02_sanawm_cam.mp4",
+   "sanawm_ls": "videos/q02_sanawm_ls.mp4",
+   "lyra_cam": "videos/q02_lyra_cam.mp4",
+   "lyra_ls": "videos/q02_lyra_ls.mp4"
+  },
+  "exact": "exactly a 2 m steep rise to a bird's-eye view"
+ },
+ {
+  "q": 3,
+  "scene": "f16",
+  "motion": "tilt_down",
+  "sentence": "The camera tilts steadily downward.",
+  "short": "tilt down \u00b7 15\u00b0",
+  "scene_prompt": "a Moroccan riad courtyard with a tiled fountain, arches, lanterns and potted palms",
+  "videos": {
+   "wan_text": "videos/q03_wan_text.mp4",
+   "wan_ls": "videos/q03_wan_ls.mp4",
+   "sanawm_cam": "videos/q03_sanawm_cam.mp4",
+   "sanawm_ls": "videos/q03_sanawm_ls.mp4",
+   "lyra_cam": "videos/q03_lyra_cam.mp4",
+   "lyra_ls": "videos/q03_lyra_ls.mp4"
+  },
+  "exact": "exactly a 15\u00b0 tilt downward"
+ },
+ {
+  "q": 4,
+  "scene": "f07",
+  "motion": "truck_right",
+  "sentence": "The camera glides steadily to the right in a sideways tracking shot.",
+  "short": "truck right \u00b7 1.6 m",
+  "scene_prompt": "a Venetian canal with a stone footbridge, mooring posts and weathered plaster facades, still green water",
+  "videos": {
+   "wan_text": "videos/q04_wan_text.mp4",
+   "wan_ls": "videos/q04_wan_ls.mp4",
+   "sanawm_cam": "videos/q04_sanawm_cam.mp4",
+   "sanawm_ls": "videos/q04_sanawm_ls.mp4",
+   "lyra_cam": "videos/q04_lyra_cam.mp4",
+   "lyra_ls": "videos/q04_lyra_ls.mp4"
+  },
+  "exact": "exactly 1.6 m to the right"
+ },
+ {
+  "q": 5,
+  "scene": "f05",
+  "motion": "arc_right",
+  "sentence": "The camera orbits steadily to the right around the scene.",
+  "short": "orbit right \u00b7 25\u00b0",
+  "scene_prompt": "a bamboo forest path with a stone walkway and a low fence, dappled light",
+  "videos": {
+   "wan_text": "videos/q05_wan_text.mp4",
+   "wan_ls": "videos/q05_wan_ls.mp4",
+   "sanawm_cam": "videos/q05_sanawm_cam.mp4",
+   "sanawm_ls": "videos/q05_sanawm_ls.mp4",
+   "lyra_cam": "videos/q05_lyra_cam.mp4",
+   "lyra_ls": "videos/q05_lyra_ls.mp4"
+  },
+  "exact": "exactly a 25\u00b0 orbit to the right"
+ },
+ {
+  "q": 6,
+  "scene": "f20",
+  "motion": "zoom_out",
+  "sentence": "The camera moves steadily straight backward, a dolly-out.",
+  "short": "dolly out \u00b7 1.6 m",
+  "scene_prompt": "a desert road running straight to the horizon with telephone poles and distant mesas",
+  "videos": {
+   "wan_text": "videos/q06_wan_text.mp4",
+   "wan_ls": "videos/q06_wan_ls.mp4",
+   "sanawm_cam": "videos/q06_sanawm_cam.mp4",
+   "sanawm_ls": "videos/q06_sanawm_ls.mp4",
+   "lyra_cam": "videos/q06_lyra_cam.mp4",
+   "lyra_ls": "videos/q06_lyra_ls.mp4"
+  },
+  "exact": "exactly a 1.6 m dolly out"
+ },
+ {
+  "q": 7,
+  "scene": "f14",
+  "motion": "pedestal_down",
+  "sentence": "The camera lowers steadily straight down.",
+  "short": "pedestal down \u00b7 1.6 m",
+  "scene_prompt": "a rocky coastal path above the sea with grass, a wooden signpost and a lighthouse in the distance",
+  "videos": {
+   "wan_text": "videos/q07_wan_text.mp4",
+   "wan_ls": "videos/q07_wan_ls.mp4",
+   "sanawm_cam": "videos/q07_sanawm_cam.mp4",
+   "sanawm_ls": "videos/q07_sanawm_ls.mp4",
+   "lyra_cam": "videos/q07_lyra_cam.mp4",
+   "lyra_ls": "videos/q07_lyra_ls.mp4"
+  },
+  "exact": "exactly 1.6 m straight down"
+ },
+ {
+  "q": 8,
+  "scene": "f21",
+  "motion": "truck_left",
+  "sentence": "The camera glides steadily to the left in a sideways tracking shot.",
+  "short": "truck left \u00b7 1.6 m",
+  "scene_prompt": "a city rooftop terrace with wooden decking, planters, a parapet and a skyline beyond",
+  "videos": {
+   "wan_text": "videos/q08_wan_text.mp4",
+   "wan_ls": "videos/q08_wan_ls.mp4",
+   "sanawm_cam": "videos/q08_sanawm_cam.mp4",
+   "sanawm_ls": "videos/q08_sanawm_ls.mp4",
+   "lyra_cam": "videos/q08_lyra_cam.mp4",
+   "lyra_ls": "videos/q08_lyra_ls.mp4"
+  },
+  "exact": "exactly a 1.6 m sideways move to the left"
+ },
+ {
+  "q": 9,
+  "scene": "f20",
+  "motion": "bev",
+  "sentence": "The camera rises steeply into a bird's-eye view while keeping the scene centred.",
+  "short": "bird's-eye \u00b7 2 m",
+  "scene_prompt": "a desert road running straight to the horizon with telephone poles and distant mesas",
+  "videos": {
+   "wan_text": "videos/q09_wan_text.mp4",
+   "wan_ls": "videos/q09_wan_ls.mp4",
+   "sanawm_cam": "videos/q09_sanawm_cam.mp4",
+   "sanawm_ls": "videos/q09_sanawm_ls.mp4",
+   "lyra_cam": "videos/q09_lyra_cam.mp4",
+   "lyra_ls": "videos/q09_lyra_ls.mp4"
+  },
+  "exact": "exactly a 2 m steep rise to a bird's-eye view",
+  "repeat_of": 4
+ },
+ {
+  "q": 10,
+  "scene": "f12",
+  "motion": "arc_left",
+  "sentence": "The camera orbits steadily to the left around the scene.",
+  "short": "orbit left \u00b7 25\u00b0",
+  "scene_prompt": "a mountain lake with a wooden jetty, pine trees on the shore and snowy peaks behind",
+  "videos": {
+   "wan_text": "videos/q10_wan_text.mp4",
+   "wan_ls": "videos/q10_wan_ls.mp4",
+   "sanawm_cam": "videos/q10_sanawm_cam.mp4",
+   "sanawm_ls": "videos/q10_sanawm_ls.mp4",
+   "lyra_cam": "videos/q10_lyra_cam.mp4",
+   "lyra_ls": "videos/q10_lyra_ls.mp4"
+  },
+  "exact": "exactly a 25\u00b0 orbit to the left",
+  "repeat_of": 6
+ }
+]

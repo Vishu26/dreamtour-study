@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Camera-Movement Study</title>
+<title>DreamTour Human Study</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@600&display=swap" rel="stylesheet">
 <style>
@@ -46,11 +46,13 @@
   button { background: linear-gradient(90deg, var(--accent), var(--accent2)); color: #fff; border: 0; border-radius: 10px; padding: 11px 28px; font-size: 15px; font-weight: 700; cursor: pointer; box-shadow: 0 8px 24px #5b8cff44; }
   button:hover { filter: brightness(1.1); }
   #done { max-width: 720px; margin: 80px auto; text-align: center; display: none; background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 44px; }
+.studytag { font-size: 1.15rem; font-weight: 600; color: #555; margin: 2px 0 10px; }
 </style>
 </head>
 <body>
 <header>
-  <h1>How well does the camera follow the request?</h1>
+  <h1>DreamTour: Layout Steering for Training-Free World Exploration</h1>
+  <p class="studytag">Human Study</p>
   <p><b>Drag the videos into order</b> — best adherence first (#1, leftmost), worst last (#6). Judge only the camera: the right direction <b>and the exact requested distance</b>. Moving too far is an error, just like moving too little or drifting. Ignore image style. &nbsp;<span id="progress"></span></p>
   <div id="bar"><div id="fill"></div></div>
 </header>
